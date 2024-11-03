@@ -13,18 +13,35 @@ import AccountShopping from "./pages/shopping-view/Account";
 import CheckoutShopping from "./pages/shopping-view/Checkout";
 import HomeShopping from "./pages/shopping-view/Home";
 import ListProductShopping from "./pages/shopping-view/ListProduct";
+import Check_aurh from "./components/check/Check_aurh";
 
 function App() {
+  const isAuthenticated = false;
+  const user = null;
   return (
     <>
       <div className="flex flex-col overflow-hidden bg-white">
         <Routes>
-          <Route path="/auth" element={<AuthLayout></AuthLayout>}>
+          <Route
+            path="/auth"
+            element={
+              <Check_aurh isAuthenticated={isAuthenticated} user={user}>
+                <AuthLayout></AuthLayout>
+              </Check_aurh>
+            }
+          >
             <Route path="signin" element={<Signin></Signin>} />
             <Route path="signup" element={<Signup></Signup>} />
           </Route>
 
-          <Route path="/admin" element={<LayoutAdmin></LayoutAdmin>}>
+          <Route
+            path="/admin"
+            element={
+              <Check_aurh isAuthenticated={isAuthenticated} user={user}>
+                <LayoutAdmin></LayoutAdmin>
+              </Check_aurh>
+            }
+          >
             <Route path="dashboard" element={<Dashboard></Dashboard>} />
             <Route path="products" element={<AdminProduct></AdminProduct>} />
 
@@ -32,7 +49,14 @@ function App() {
 
             <Route path="features" element={<Featutres></Featutres>} />
           </Route>
-          <Route path="/shop" element={<LayoutShoping></LayoutShoping>}>
+          <Route
+            path="/shop"
+            element={
+              <Check_aurh isAuthenticated={isAuthenticated} user={user}>
+                <LayoutShoping></LayoutShoping>
+              </Check_aurh>
+            }
+          >
             <Route
               path="accountshop"
               element={<AccountShopping></AccountShopping>}
