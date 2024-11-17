@@ -10,7 +10,7 @@ const Check_aurh = ({ isAuthenticated, user, children }) => {
       return <Navigate to="/auth/signin" />;
     } else {
       if (user?.role === "admin") {
-        return <Navigate to="/admin/dashboard" />;
+        return <Navigate to="/admin" />;
       } else {
         return <Navigate to="/shop/homeshop" />;
       }

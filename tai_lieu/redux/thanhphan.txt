@@ -1,0 +1,59 @@
+Store
+Store là nơi lưu trữ toàn bộ trạng thái (state) của ứng dụng trong một cây state duy nhất. Đây là một single source of truth – một nguồn duy nhất mà mọi thành phần trong ứng dụng có thể truy cập để lấy dữ liệu.
+Store có các chức năng cơ bản:
+getState: Lấy trạng thái hiện tại của Store.
+dispatch: Gửi action để thay đổi trạng thái.
+subscribe: Đăng ký một listener để lắng nghe mọi sự thay đổi của state.
+Ví dụ:
+
+javascript
+Copy code
+import { configureStore } from '@reduxjs/toolkit';
+import rootReducer from './rootReducer';
+
+const store = configureStore({ reducer: rootReducer });
+
+export default store;
+2. Action
+Action là một đối tượng mô tả hành động cần thực hiện để thay đổi state. Mỗi action có một type để mô tả loại hành động và có thể có payload chứa dữ liệu bổ sung.
+Action Creators là các hàm giúp tạo ra các action, giúp đảm bảo action được tạo đúng cú pháp.
+Ví dụ về Action:
+
+javascript
+Copy code
+const increment = {
+  type: 'counter/increment',
+  payload: 1
+};
+Ví dụ về Action Creator:
+
+javascript
+Copy code
+const increment = (value) => ({
+  type: 'counter/increment',
+  payload: value
+});
+3. Reducer
+Reducer là một hàm nhận state hiện tại và một action, sau đó trả về một state mới dựa trên action đó. Reducer phải là một hàm pure function – không làm thay đổi state cũ mà phải tạo một bản sao mới để trả về.
+Reducer được tổ chức theo các slice để quản lý các phần khác nhau của state.
+Ví dụ về Reducer:
+
+javascript
+Copy code
+const counterReducer = (state = { count: 0 }, action) => {
+  switch (action.type) {
+    case 'counter/increment':
+      return { ...state, count: state.count + action.payload };
+    case 'counter/decrement':
+      return { ...state, count: state.count - action.payload };
+    default:
+      return state;
+  }
+};
+4. Middleware (Phần bổ sung)
+Middleware không phải là phần bắt buộc nhưng thường được dùng để mở rộng chức năng của Redux. Middleware lắng nghe mọi action được dispatch và có thể can thiệp vào luồng xử lý trước khi action được reducer xử lý.
+Redux Thunk là middleware phổ biến giúp xử lý các action bất đồng bộ (ví dụ: gọi API).
+Tổng quan về Luồng Redux
+Dispatch an Action: Gửi một action từ component để yêu cầu thay đổi state.
+Reducer: Action sẽ được chuyển đến reducer để cập nhật state dựa trên logic trong reducer.
+Store: State mới sẽ được lưu vào store, và các component liên quan sẽ tự động cập nhật khi state thay đổi.
