@@ -1,18 +1,18 @@
-import React from "react";
+import React, { useState } from "react";
 import SideBar from "./SideBar";
-import Header from "./Header";
+
 import { Outlet } from "react-router-dom";
 
+import Header_admin from "./Header_admin";
+
 const LayoutAdmin = () => {
+  const [openSidebar, setOpenSidebar] = useState(false);
   return (
-    <div className="flex min-h-screen w-full">
-      <SideBar></SideBar>
-      <div className="flex flex-1 flex-col">
-        <Header></Header>
-        <main className="flex-1 flex bg-muted/40 p-4 md:p-6">
-          <Outlet></Outlet>
-        </main>
-      </div>
+    <div>
+      <Header_admin setOpen={setOpenSidebar}></Header_admin>
+      abcjsfdslmnd
+      <SideBar open={openSidebar} setOpen={setOpenSidebar}></SideBar>
+      <Outlet></Outlet>
     </div>
   );
 };

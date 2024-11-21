@@ -1,32 +1,33 @@
 import React from "react";
 import { Navigate, useLocation } from "react-router-dom";
-const Check_aurh = ({ isAuthenticated, user, children }) => {
+
+const Check_aurh = ({ isAuthenticated, user, isLoading, children }) => {
   const location = useLocation();
 
-  console.log(location.pathname, isAuthenticated);
+  console.log("isAuthenticated:", isAuthenticated);
+  console.log("user:", user);
+  console.log("currentPath:", location.pathname);
+  console.log("is",isLoading)
 
-  if (location.pathname === "/") {
-    if (!isAuthenticated) {
+  // Đợi đến khi trạng thái tải xong
+  if (isLoading) {
+    console.log(1)
+    return <div>Loading...</div>; // Hiển thị màn hình loading tạm thời
+  }
+
+  // Điều hướng người dùng chưa đăng nhập về trang signin
+  if (!isAuthenticated) {
+    if (
+      !(
+        location.pathname.includes("/signin") ||
+        location.pathname.includes("/signup")
+      )
+    ) {
       return <Navigate to="/auth/signin" />;
-    } else {
-      if (user?.role === "admin") {
-        return <Navigate to="/admin" />;
-      } else {
-        return <Navigate to="/shop/homeshop" />;
-      }
     }
   }
 
-  if (
-    !isAuthenticated &&
-    !(
-      location.pathname.includes("/signin") ||
-      location.pathname.includes("/signup")
-    )
-  ) {
-    return <Navigate to="/auth/signup" />;
-  }
-
+  // Điều hướng người dùng đã đăng nhập nhưng cố truy cập signin/signup
   if (
     isAuthenticated &&
     (location.pathname.includes("/signin") ||
@@ -39,22 +40,34 @@ const Check_aurh = ({ isAuthenticated, user, children }) => {
     }
   }
 
+  // Ngăn người dùng thông thường truy cập admin
   if (
     isAuthenticated &&
     user?.role !== "admin" &&
-    location.pathname.includes("admin")
+    location.pathname.includes("/admin")
   ) {
     return <Navigate to="/unauth-page" />;
   }
 
+  // Ngăn admin vào shop
   if (
     isAuthenticated &&
     user?.role === "admin" &&
-    location.pathname.includes("shop")
+    location.pathname.includes("/shop")
   ) {
     return <Navigate to="/admin/dashboard" />;
   }
 
+  // Điều hướng từ trang gốc "/"
+  if (location.pathname === "/") {
+    if (user?.role === "admin") {
+      return <Navigate to="/admin/dashboard" />;
+    } else {
+      return <Navigate to="/shop/homeshop" />;
+    }
+  }
+
+  // Mặc định render children
   return <>{children}</>;
 };
 

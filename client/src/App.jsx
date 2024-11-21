@@ -18,17 +18,17 @@ import { useSelector } from "react-redux";
 import { useDispatch } from "react-redux";
 import { useEffect } from "react";
 import { checkAuth } from "./store/auth_slice";
-import { Skeleton } from "@/components/ui/skeleton"
+import { Skeleton } from "@/components/ui/skeleton";
 
 function App() {
-  const { user, isAuth, isLoading } = useSelector((state) => state.auth);
   const dispatch = useDispatch();
   useEffect(() => {
     dispatch(checkAuth());
   }, [dispatch]);
-  console.log(user);
-  console.log(isAuth);
-  if (isLoading) return <Skeleton className="w-[100px] h-[20px] rounded-full" />;
+  const { user, isAuth, isLoading } = useSelector((state) => state.auth);
+
+  if (isLoading) return <Skeleton className="w-[800] bg-black h-[600px]" />;
+
   console.log(isLoading, user);
 
   return (
@@ -38,7 +38,11 @@ function App() {
           <Route
             path="/auth"
             element={
-              <Check_aurh isAuthenticated={isAuth} user={user}>
+              <Check_aurh
+                isAuthenticated={isAuth}
+                user={user}
+                isLoading={isLoading}
+              >
                 <AuthLayout></AuthLayout>
               </Check_aurh>
             }
@@ -50,7 +54,11 @@ function App() {
           <Route
             path="/admin"
             element={
-              <Check_aurh isAuthenticated={isAuth} user={user}>
+              <Check_aurh
+                isAuthenticated={isAuth}
+                user={user}
+                isLoading={isLoading}
+              >
                 <LayoutAdmin></LayoutAdmin>
               </Check_aurh>
             }
@@ -65,7 +73,11 @@ function App() {
           <Route
             path="/shop"
             element={
-              <Check_aurh isAuthenticated={isAuth} user={user}>
+              <Check_aurh
+                isAuthenticated={isAuth}
+                user={user}
+                isLoading={isLoading}
+              >
                 <LayoutShoping></LayoutShoping>
               </Check_aurh>
             }
