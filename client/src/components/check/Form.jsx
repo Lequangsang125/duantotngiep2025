@@ -6,6 +6,7 @@ import {
   SelectValue,
   SelectContent,
   SelectLabel,
+  SelectItem,
 } from "../ui/select";
 import { Input } from "../ui/input";
 import { Textarea } from "../ui/textarea";

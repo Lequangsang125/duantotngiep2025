@@ -29,7 +29,7 @@ const Icon = [
     icon: <BadgeCheck />,
   },
 ];
-function Menu() {
+function Menu({setOpen}) {
   const navigate = useNavigate();
   return (
     <nav className="mt-8 flex-col flex gap-2">
