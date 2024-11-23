@@ -25,6 +25,11 @@ const AdminProduct = () => {
   const [formData, setFormData] = useState(initFormData);
   const [imagefile, setimagefile] = useState(null);
   const [upploadimage, setupploadimage] = useState(null);
+  const [imageLoadingState, setimageLoadingState] = useState(false);
+  function onSubmit() {
+  
+  }
+  console.log("formdata", formData);
   return (
     <Fragment>
       <div className="mb-5 w-full flex justify-end">
@@ -45,10 +50,13 @@ const AdminProduct = () => {
               setimagefile={setimagefile}
               upploadimage={upploadimage}
               setupploadimage={setupploadimage}
+              imageLoadingState={imageLoadingState}
+              setimageLoadingState={setimageLoadingState}
             ></Image_Uppload>
           </SheetHeader>
           <div className="py-6">
             <Form
+              onSubmit={onSubmit}
               formData={formData}
               setFormData={setFormData}
               buttonText="Add"
